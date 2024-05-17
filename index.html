@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raccomandazioni di Film</title>
+</head>
+<body>
+    <h1>Raccomandazioni di Film</h1>
+    <div id="recommendations">
+        <!-- Le raccomandazioni saranno caricate qui -->
+    </div>
+
+    <script>
+        // Funzione per caricare le raccomandazioni via AJAX
+        function loadRecommendations(userId) {
+            fetch(`get_recommendations.php?user_id=${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const recommendationsDiv = document.getElementById('recommendations');
+                    recommendationsDiv.innerHTML = '';
+                    data.forEach(film => {
+                        const filmDiv = document.createElement('div');
+                        filmDiv.textContent = `Film consigliato: ${film.titolo} (punteggio: ${film.punteggio})`;
+                        recommendationsDiv.appendChild(filmDiv);
+                    });
+                });
+        }
+
+        // Esempio di caricamento raccomandazioni per l'utente con ID 1
+        loadRecommendations(1);
+    </script>
+</body>
+</html>
